@@ -8,3 +8,19 @@ Tous les 3 coups, obtention d'un bonus de dégâts x 3 des dégâts, puis retour
 
 mage : megicula
 Création d'un clone plus faible, avec 30% des stats du mage, c'est lui qui prend l'aggro
+
+
+
+Armes::
+Effet spéciaux:
+
+Drain de vie,
+
+Health de vie,
+
+baisse de la puissance d'attaque de l'ennemi
+
+Augementation des degats
+
+
+
