@@ -1,0 +1,10 @@
+Ajouter une colonne emblème lié à un dieu
+
+archer : lunairia
+Obtention de 2% des pv max de l'archer
+
+berserk : hadès
+Tous les 3 coups, obtention d'un bonus de dégâts x 3 des dégâts, puis retour à la normale
+
+mage : megicula
+Création d'un clone plus faible, avec 30% des stats du mage, c'est lui qui prend l'aggro
