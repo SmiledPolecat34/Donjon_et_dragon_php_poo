@@ -14,6 +14,10 @@ class Personnage{
         $this->pointsDefense = $pd;
         $this->amelioration = $upgrade;
     }
+
+}
+
+class Salle{
     
 }
 ?>
