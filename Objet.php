@@ -43,10 +43,10 @@ echo "Larme des dieux : " . $larmeMythologique->getNom() . ", Effet : " . $larme
 $inventaire = new Inventaire();
 
 $inventaire->ajouterObjet($potion);
-$inventaire->ajouterObjet($elixir);
+$inventaire->ajouterObjet($elixir;
 $inventaire->ajouterObjet($cape);
 $inventaire->ajouterObjet($pierrerésurrection);
-$inventaire->ajouterObjet($larmeDesDieux);
+$inventaire->ajouterObjet(lar);
 
 $inventaire->afficherInventaire();
 $inventaire->afficherInventaire();
