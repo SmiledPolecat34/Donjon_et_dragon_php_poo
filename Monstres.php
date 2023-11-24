@@ -1,10 +1,11 @@
 <?php
 
-require_once('MonstresDAO.php');
+// require_once('MonstresDAO.php');
 require_once('Personnage.php');
 require_once('Config.php');
 
 class Monstres extends Personnage{
+    private $id;
     private $bdd;
     private $nom;
     private $pointsDeVie;
@@ -12,15 +13,21 @@ class Monstres extends Personnage{
     private $pointsDefense;
     private $experience;
     private $niveau;
+    private $armeEquipee;
 
-    public function __construct($nom, $pv, $pa, $pd, $xp, $lvl){
+    public function __construct($nom, $pv, $pa, $pd, $xp, $lvl, $armeEquipee){
         $this->nom = $nom;
         $this->pointsDeVie = $pv;
         $this->pointsAttaque = $pa;
         $this->pointsDefense = $pd;
         $this->experience = $xp;
         $this->niveau = $lvl;
+        $this->armeEquipee = $armeEquipee;
     }
+
+    public function getArmeEquipee(){
+        return $this->armeEquipee;
+    }    
 
     public function getId(){
         return $this->id;
@@ -109,6 +116,63 @@ class Monstres extends Personnage{
             echo $aleatoire;
         }
     }
+
+    public function niveauMonstre($niveau){
+        for($i = 1; $i <= $niveau; $i++){
+            $this->setPointsDeVie($this->getPointsDeVie() + 10);
+            $this->setPointsAttaque($this->getPointsAttaque() + 5);
+            $this->setPointsDefense($this->getPointsDefense() + 5);
+        }
+    }
+}
+
+class MonstresDAO{
+    private $bdd;
+
+    public function __construct($bdd){
+        $this->bdd = $bdd;
+    }
+
+    public function getMonstre($id){
+        $req = $this->bdd->prepare('SELECT * FROM monstres WHERE id = :id');
+        $req->execute(array('id' => $id));
+        $donnees = $req->fetch(PDO::FETCH_ASSOC);
+        return new Monstre($donnees['nom'], $donnees['pointsDeVie'], $donnees['pointsAttaque'], $donnees['pointsDefense'], $donnees['experience'], $donnees['niveau'], $donnees['armeEquipee'], $donnees['passif'], $donnees['type'], $donnees['est_vivant']);
+    }
+
+    public function ajouterMonstre($monstre){
+        $req = $this->bdd->prepare('INSERT INTO monstres(nom, pointsDeVie, pointsAttaque, pointsDefense, experience, niveau, armeEquipee, passif, type, est_vivant) VALUES(:nom, :pointsDeVie, :pointsAttaque, :pointsDefense, :experience, :niveau, :armeEquipee, :passif, :type, :est_vivant)');
+        $req->execute(array(
+            'nom' => $monstre->getNom(),
+            'pointsDeVie' => $monstre->getPointsDeVie(),
+            'pointsAttaque' => $monstre->getPointsAttaque(),
+            'pointsDefense' => $monstre->getPointsDefense(),
+            'experience' => $monstre->getExperience(),
+            'niveau' => $monstre->getNiveau(),
+            'armeEquipee' => $monstre->getArmeEquipee(),
+            'passif' => $monstre->getPassif(),
+            'type' => $monstre->getType(),
+            'est_vivant' => $monstre->getEstVivant()
+        ));
+    }
+    
+
+    public function sauvegarderPartie($monstre){
+        $req = $this->bdd->prepare('UPDATE monstres SET nom = :nom, pointsDeVie = :pointsDeVie, pointsAttaque = :pointsAttaque, pointsDefense = :pointsDefense, experience = :experience, niveau = :niveau, armeEquipee = :armeEquipee, passif = :passif, type = :type, est_vivant = :est_vivant WHERE id = :id');
+        $req->execute(array(
+            'nom' => $monstre->getNom(),
+            'pointsDeVie' => $monstre->getPointsDeVie(),
+            'pointsAttaque' => $monstre->getPointsAttaque(),
+            'pointsDefense' => $monstre->getPointsDefense(),
+            'experience' => $monstre->getExperience(),
+            'niveau' => $monstre->getNiveau(),
+            'armeEquipee' => $monstre->getArmeEquipee(),
+            'passif' => $monstre->getPassif(),
+            'type' => $monstre->getType(),
+            'est_vivant' => $monstre->getEstVivant(),
+            'id' => $monstre->getId()
+        ));
+    }
 }
 
 $bdd = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8', $user, $password);
@@ -116,8 +180,11 @@ $bdd = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8', $user, $p
 
 $monstresDAO = new MonstresDAO($bdd);
 
-$monstre1 = new Monstres("Squelette furieux", 100, 10, 5, 0, 1);
-$monstre2 = new Monstres("Ghoul", 100, 10, 5, 0, 1);
+// Est vivant   1 = vivant, 0 = mort
+$valeurParDefaut = "";
+
+$monstre1 = new Monstres("Squelette furieux", 100, 10, 5, 0, 1, $valeurParDefaut);
+$monstre2 = new Monstres("Ghoul", 100, 10, 5, 0, 1, $valeurParDefaut);
 
 $monstresDAO->ajouterMonstre($monstre1);
 $monstresDAO->ajouterMonstre($monstre2);
@@ -159,14 +226,21 @@ $monstresDAO->ajouterMonstre($monstre2);
 // $franklin->equiperNouvelleArme($batonMagique);
 // $sidick->equiperNouvelleArme($epee);
 
-// //Monstres
+// //Monstres salle 1
 
 // $monstre = new Monstre("Squelette furieux", 100, 10, 5, 0, 1,);
-// $monstre = new Monstre("Ghoul", 100, 10, 5, 0, 1,);
 // $monstre = new Monstre("Cultiste corrompue", 100, 10, 5, 0, 1,);
-// $monstre = new Monstre("Démon", 100, 10, 5, 0, 1,);
 // $monstre = new Monstre("Gargouille enragé", 100, 10, 5, 0, 1,);
+
+// //Monstres salle 2
 // $monstre = new Monstre("fantome perdu", 100, 10, 5, 0, 1,);
+// $monstre = new Monstre("Ghoul", 100, 10, 5, 0, 1,);
+// $monstre = new Monstre("Créature des profondeurs", 100, 10, 5, 0, 1,);
+
+// Monstres salle 3
+// $monstre = new Monstre("Démon", 100, 10, 5, 0, 1,);
+// $monstre = new Monstre("Ange déchue", 100, 10, 5, 0, 1,);
+// $monstre = new Monstre("", 100, 10, 5, 0, 1,);
 
 // $boss = new Monstre("Nécromancien", 100, 10, 5, 0, 1,);
 // $boss = new Monstre("Reine des Sorcière ", 100, 10, 5, 0, 1,);
