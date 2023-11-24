@@ -1,3 +1,4 @@
+<!-- index.php -->
 <?php
 
 require_once('Systeme.php');
@@ -9,6 +10,7 @@ require_once('Config.php');
 require_once('Salle.php');
 require_once('SalleSpeciale.php');
 
+$monstre = new Monstres("Squelette furieux", 100, 10, 5, 0, 1);
 $monstre = new Monstres("Squelette furieux", 100, 10, 5, 0, 1);
 echo $monstre->getNom();
 $monstre = new Monstres("Ghoul", 100, 10, 5, 0, 1);

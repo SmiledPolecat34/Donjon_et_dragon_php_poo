@@ -1,13 +1,15 @@
 <?php
 
+require_once('Personnage.php');
+
 class Aykiu extends Personnage{
     protected $bdd;
-    protected $nom = "Aykiu";
-    protected $pointsDeVie = 110;
-    protected $pointsAttaque = 13;
-    protected $pointsDefense = 8;
-    protected $experience = 0;
-    protected $niveau = 1;
+    protected $nom;
+    protected $pointsDeVie;
+    protected $pointsAttaque;
+    protected $pointsDefense;
+    protected $experience;
+    protected $niveau;
     protected $armeEquipee;
     protected $passif = "Sacrifice de la déesse lunairia";
     protected $type = "Archer";
@@ -17,24 +19,36 @@ class Aykiu extends Personnage{
 
     // sacrifier des pv 30% pour one shot un monstre
 
-    public function __construct($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee){
-        $this->nom = $nom;
-        $this->pointsDeVie = $pv;
-        $this->pointsAttaque = $pa;
-        $this->pointsDefense = $pd;
-        $this->experience = $xp;
-        $this->niveau = $lvl;
-        $this->armeEquipee = "Arc";
+    public function __construct($nomAykiu, $pvAykiu, $paAykiu, $pdAykiu, $xpAykiu, $lvlAykiu, $armeAykiu){
+        $this->nom = $nomAykiu;
+        $this->pointsDeVie = $pvAykiu;
+        $this->pointsAttaque = $paAykiu;
+        $this->pointsDefense = $pdAykiu;
+        $this->experience = $xpAykiu;
+        $this->niveau = $lvlAykiu;
+        $this->armeEquipee = $armeAykiu;
     }
 
-    public function getArmeEquipee(){
-        return $this->armeEquipee;
+    public function instanceVariables(){
+        //Aykiu variables
+        $this->nom = "Aykiu";
+        $this->pointsDeVie = 110;
+        $this->pointsAttaque = 13;
+        $this->pointsDefense = 8;
+        $this->experience = 0;
+        $this->niveau = 1;
+        $this->armeEquipee = "Arc en bois";
     }
 
-    public function setArmeEquipee($armeEquipee){
-        $this->armeEquipee = $armeEquipee;
+    public function getNom(){
+        return $this->nom;
     }
-    
 }
+
+$aykiu = new Aykiu("", 0, 0, 0, 0, 0, "");
+
+$aykiu->instanceVariables();
+
+echo $aykiu->getNom();
 
 ?>

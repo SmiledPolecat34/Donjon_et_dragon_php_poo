@@ -22,5 +22,37 @@ baisse de la puissance d'attaque de l'ennemi
 
 Augementation des degats
 
+nom de salle :
 
 
+salle 1 : la crypte
+
+monstre : Squelette furieux, Cultiste corrompue, Gargouille enragé
+
+boss : Nécromancien
+
+
+salle 2 : les ruines 
+
+monstre : Ghoul, fantome perdu, Golem de la foret
+
+boss : Reine des Sorcière
+
+
+salle 3 : Les enfers
+
+monstre : Démon, Ange déchue, Minotaure
+
+boss : Roi démon
+
+
+
+
+
+Nom de soib :
+
+Aykiu : Bandage + soin + soin
+
+Franklin : Potion enfantine (Rajeunissement des cellules) soin + defense
+
+Sidick : Breuvage du Diable soin + attaque

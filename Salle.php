@@ -1,14 +1,14 @@
 <?php
 
-require_once('SalleDAO.php');
-
 class Salle {
     public $nom; // Nom de la salle
     public $type; // Le type de salle
     public $description; // Description de la salle
+    public $monstre; // Le monstre présent dans la salle
+    public $boss; // Le boss présent dans la salle
 
     // Constructeur
-    public function __construct($type, $description) {
+    public function __construct($type, $description, $monstre, $boss) {
         $this->type = $type;
         $this->description = $description;
     }
@@ -69,6 +69,90 @@ class Salle {
         $this->description = $description;
     }
     
+    public function getMonstre(){
+        return $this->monstre;
+    }
+
+    public function getBoss(){
+        return $this->boss;
+    }
 }
+
+class SalleDAO{
+    private $bdd;
+
+    public function __construct($bdd){
+        $this->bdd = $bdd;
+    }
+
+    public function getSalles() {
+        $salles = array();
+        $req = $this->bdd->query('SELECT * FROM salles');
+        while ($donnees = $req->fetch(PDO::FETCH_ASSOC)) {
+            $salle = new Salle($donnees['nom'], $donnees['type'], $donnees['description'], $donnees['personnage_id'], $donnees['monstre'], $donnees['boss']);
+            // Ajouter la salle à la liste des salles
+            $salles[] = $salle;
+        }
+        return $salles;
+
+    function sauvegarderPartie($salle){
+        $req = $this->bdd->prepare('UPDATE salles SET nom = :nom, type = :type, description = :description, personnage_id = :personnage_id, monstre = :monstre, boss = :boss WHERE id = :id');
+        $req->execute(array(
+            'nom' => $salle->getNom(),
+            'type' => $salle->getType(),
+            'description' => $salle->getDescription(),
+            'personnage_id' => $salle->getPersonnage(),
+            'monstre' => $salle->getMonstre(),
+            'boss' => $salle->getBoss(),
+            'id' => $salle->getId()
+        ));
+    }
+}
+}
+
+//Monstres salle 1
+
+$necromancien = new Monstre("Nécromancien", 100, 10, 5, 0, 1,);
+
+$squeletteFurieux = new Monstre("Squelette furieux", 100, 10, 5, 0, 1,);
+$cultisteCorrompue = new Monstre("Cultiste corrompue", 100, 10, 5, 0, 1,);
+$gargouilleEnragee = new Monstre("Gargouille enragé", 100, 10, 5, 0, 1,);
+
+//Monstres salle 2
+
+$reineDesSorciere = new Monstre("Reine des Sorcière ", 100, 10, 5, 0, 1,);
+
+$fantomeErrant = new Monstre("fantome errant", 100, 10, 5, 0, 1,);
+$ghoul = new Monstre("Ghoul", 100, 10, 5, 0, 1,);
+$golemDeLaForet = new Monstre("Golem de la foret", 100, 10, 5, 0, 1,);
+
+//Monstres salle 3
+
+$roiDemon = new Monstre("Roi des démons", 100, 10, 5, 0, 1,);
+
+$demon = new Monstre("Démon", 100, 10, 5, 0, 1,);
+$angesDechus = new Monstre("Ange déchus", 100, 10, 5, 0, 1,);
+$minautore = new Monstre("Minotaure", 100, 10, 5, 0, 1,);
+
+// d'affichage des informations
+echo "Nom de la salle : " . $crypte->getNom() . "\n";
+echo "Description : " . $ruines->getDescription() . "\n";
+echo "Boss : " . $enfers->getBoss()->getNom() . "\n";
+echo "Monstres : " . implode(", ", array_map(function ($monstre) {
+    return $monstre->getNom();
+}, $salle1->getMonstres())) . "\n";
+
+
+
+// Affichage des informations sur les salles
+echo "Nom de la salle : " . $crypte->getNom() . "\n";
+echo "Description : " . $crypte->getDescription() . "\n\n";
+
+echo "Nom de la salle : " . $ruines->getNom() . "\n";
+echo "Description : " . $ruines->getDescription() . "\n\n";
+
+echo "Nom de la salle : " . $enfers->getNom() . "\n";
+echo "Description : " . $enfers->getDescription() . "\n";
+
 
 ?>
