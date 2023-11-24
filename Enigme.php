@@ -119,4 +119,192 @@ class EnigmeDAO{
 
 
 }
-?>
+
+// Enigme Aykiu////////////////////////////////////////////////////////////////////////////////////
+
+$enigmesAykiu = array(
+    new Enigme("Je suis une créature volante avec des écailles, cracheur de feu, et souvent considéré comme un gardien de trésor. Qui suis-je ?", array(
+        "Minotaure" => false,
+        "Gobelin" => false,
+        "Chimère" => false,
+        "Dragon" => true
+    )),
+),
+new Enigme(
+    "Je suis une arme légendaire autrefois utilisée par les héros pour combattre les forces du mal. Qu'est-ce que je suis ?",
+    array(
+        "Baguette magique" => false,
+        "Arc long" => false,
+        "Épée légendaire" => true,
+        "Marteau de guerre" => false
+    )
+),
+new Enigme(
+    "Je suis une créature qui se cache dans l'ombre, embusquée dans les donjons, attendant de bondir sur les intrus. Qui suis-je ?",
+    array(
+        "Kobold" => false,
+        "Troll" => false,
+        "Gobelin" => false,
+        "Ombre" => true
+    )
+),
+new Enigme(
+    "Je suis une sphère magique qui peut prédire l'avenir et répondre à des questions. Que suis-je ?",
+    array(
+        "Pierre de téléportation" => false,
+        "Boule de feu" => false,
+        "Bouclier réflecteur" => false,
+        "Boule de cristal" => true
+    )
+),
+new Enigme(
+    "Je suis une relique ancienne, généralement ornée de pierres précieuses, et je confère des pouvoirs magiques à celui qui me porte. Qu'est-ce que je suis ?",
+    array(
+        "Couronne enchantée" => false,
+        "Amulette du pouvoir" => false,
+        "Bracelet d'invocation" => false,
+        "Artefact magique" => true
+    )
+),
+new Enigme(
+    "Je suis un sortilège puissant qui invoque des créatures pour combattre aux côtés du lanceur. Quel sort suis-je ?",
+    array(
+        "Explosion arcanique" => false,
+        "Métamorphose" => false,
+        "Télékinésie" => false,
+        "Invocation de familiers" => true
+    )
+),
+
+afficherEnigme($enigmesAykiu[0]);
+
+//////////////// enigme Franklin////////////////////////////////////////////////////////////////////////////////////
+
+$enigmesFranklin = array(
+    new Enigme(
+        "Je suis une créature nocturne, souvent associée à la magie noire, et je me nourris de la peur des mortels. Qui suis-je ?",
+        array(
+            "Liche" => false,
+            "Harpie" => false,
+            "Goule" => false,
+            "Vampire" => true
+        )
+    ),
+    new Enigme(
+        "Je suis une forteresse sombre et menaçante, habitée par des créatures maléfiques. Qu'est-ce que je suis ?",
+        array(
+            "Tour de sorcier" => false,
+            "Forteresse naine" => false,
+            "Donjon" => true,
+            "Château elfique" => false
+        )
+    ),
+    new Enigme(
+        "Je suis une arme enchantée qui peut infliger des dégâts supplémentaires aux créatures magiques. Qu'est-ce que je suis ?",
+        array(
+            "Dague empoisonnée" => false,
+            "Arc elfique" => false,
+            "Lame enchantée anti-magie" => true,
+            "Lance de démon" => false
+        )
+    ),
+    new Enigme(
+        "Je suis une créature mythique avec des ailes, une crinière de feu, et je suis souvent monté par des chevaliers. Qui suis-je ?",
+        array(
+            "Wyrm" => false,
+            "Hippogriffe" => true,
+            "Griffon" => false,
+            "Dragonnet" => false
+        )
+    ),
+    new Enigme(
+        "Je suis un sort qui manipule le temps, permettant au lanceur de revivre un moment précédent. Quel sort suis-je ?",
+        array(
+            "Tempête temporelle" => false,
+            "Distorsion spatio-temporelle" => false,
+            "Rappel temporel" => false,
+            "Manipulation temporelle" => true
+        )
+    ),
+    new Enigme(
+        "Je suis un objet magique qui peut révéler la vérité et détecter les illusions. Qu'est-ce que je suis ?",
+        array(
+            "Œil de vérité" => true,
+            "Pierre de détection" => false,
+            "Amulette de discernement" => false,
+            "Bouclier de vérité" => false
+        )
+    )
+);
+
+afficherEnigme($enigmesFranklin[0]);
+
+
+//////////////// enigme Sidick////////////////////////////////////////////////////////////////////////////////////
+
+$enigmesSidick = array(
+    new Enigme(
+        "Je suis une créature massive avec une carapace solide et une attaque redoutable. Qui suis-je ?",
+        array(
+            "Ogre" => false,
+            "Troll" => false,
+            "Géant" => false,
+            "Minotaure" => true
+        )
+    ),
+    new Enigme(
+        "Je suis une boisson favorite des aventuriers, brassée avec des ingrédients magiques. Qu'est-ce que je suis ?",
+        array(
+            "Élixir d'invisibilité" => false,
+            "Potion de guérison" => true,
+            "Potion de force" => false,
+            "Jus d'ombre" => false
+        )
+    ),
+    new Enigme(
+        "Je suis un artefact antique qui confère à celui qui me porte une résistance accrue et des compétences spéciales. Qu'est-ce que je suis ?",
+        array(
+            "Œil du dragon" => false,
+            "Collier de protection" => false,
+            "Bouclier d'invincibilité" => false,
+            "Artefact de protection" => true
+        )
+    ),
+    new Enigme(
+        "Je suis une créature mythique qui peut guider les aventuriers vers des trésors cachés. Qui suis-je ?",
+        array(
+            "Harpie" => false,
+            "Sphinx" => true,
+            "Basilic" => false,
+            "Chimère" => false
+        )
+    ),
+    new Enigme(
+        "Je suis un sort qui crée une barrière invisible pour protéger le lanceur et ses alliés. Quel sort suis-je ?",
+        array(
+            "Mur de feu" => false,
+            "Barrière magique" => false,
+            "Bouclier arcanique" => false,
+            "Sort de bouclier" => true
+        )
+    ),
+    new Enigme(
+        "Je suis un lieu mystique où l'on peut acheter et vendre des équipements magiques. Où suis-je ?",
+        array(
+            "Forge naine" => false,
+            "Boutique d'alchimie" => false,
+            "Taverne magique" => false,
+            "Boutique d'objets magiques" => true
+        )
+    )
+);
+
+afficherEnigme($enigmesSidick[0]);
+
+// Fonction pour afficher une énigme avec des choix
+function afficherEnigme($enigme) {
+echo $enigme->getQuestion() . "\n";
+foreach ($enigme->getChoix() as $choix => $correct) {
+    echo "$choix) $choix\n";
+}
+}
