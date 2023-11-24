@@ -52,32 +52,32 @@ class Menu {
                 break;
             //Franklin
             case 2:
-                echo " [1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n";
+                echo " [1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n\n";
                 $choix2 = readline("Que voulez-vous faire ? >");
                 switch($choix2){
                     case 1:
-                        echo "Franklin est un mage qui a été choisi par la déesse Megicula pour sauver le monde.";
-                        echo "Il a été choisi car il est le meilleur mage du monde.";
-                        echo "Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.";
-                        echo "Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.";
+                        echo "Franklin est un mage qui a été choisi par la déesse Megicula pour sauver le monde.\n";
+                        echo "Il a été choisi car il est le meilleur mage du monde.\n";
+                        echo "Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.\n";
+                        echo "Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.\n";
                         break;
                     case 2:
                         $personnage = new Franklin($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo `Nom : $personnage->getNom()`;
-                        echo `Points de vie : $personnage->getPointsDeVie()`;
-                        echo `Points d'attaque : $personnage->getPointsAttaque()`;
-                        echo `Points de défense : $personnage->getPointsDefense()`;
-                        echo `Passif : $personnage->getPassif()`;
-                        echo `Type : $personnage->getType()`;
+                        echo `Nom : $personnage->getNom()\n`;
+                        echo `Points de vie : $personnage->getPointsDeVie()\n`;
+                        echo `Points d'attaque : $personnage->getPointsAttaque()\n`;
+                        echo `Points de défense : $personnage->getPointsDefense()\n`;
+                        echo `Passif : $personnage->getPassif()\n`;
+                        echo `Type : $personnage->getType()\n`;
                         break;
                     case 3:
                         if ($personnage == true){
-                            echo "Vous avez choisi Franklin !";
+                            echo "Vous avez choisi Franklin !\n";
                             $this->menuDonjon();
                         }
                         else if($personnage == false){
                         $personnage = new Franklin($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo "Personnage créé avec succès !";
+                        echo "Personnage créé avec succès !\n";
                         $this->menuDonjon();
                         }
                         else{
@@ -141,7 +141,7 @@ class Menu {
         echo " [1] Aller dans le donjon \n";
         echo " [2] Charger une partie \n";
         echo " [3] Afficher les crédits\n";
-        echo " [4] Quitter le jeu\n";
+        echo " [4] Quitter le jeu\n\n";
 
         $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
 
@@ -166,12 +166,12 @@ class Menu {
     }
 
     public function menuDonjon(){
-        echo "1 : Explorer la salle";
-        echo "2 : Ouvrir l'inventaire";
-        echo "3 : Sauvegarder la partie";
-        echo "4 : Quitter le jeu";
+        echo " [1] Explorer la salle\n";
+        echo " [2] Ouvrir l'inventaire\n";
+        echo " [3] Sauvegarder la partie\n";
+        echo " [4] Quitter le jeu\n\n";
 
-        $choix = readline("Que voulez-vous faire ? 1, 2, 3, 4");
+        $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
 
         switch($choix){
             case 1:
@@ -226,7 +226,7 @@ class Menu {
     public function ouvrirInventaire(){
         $inventaire = new Inventaire();
         $inventaire->afficherInventaire();
-        $choix = readline("Que voulez-vous faire ? 1 : Changer d'arme, 2 : Quitter l'inventaire");
+        $choix = readline(" \n [1] Changer d'arme \n [2] Quitter l'inventaire \n\nQue voulez-vous faire ? >");
         switch($choix){
             case 1:
                 $arme = new Arme();
@@ -250,7 +250,6 @@ class Menu {
         $salleDAO = new SalleDAO();
         $salleDAO->sauvegarderPartie($salle);
     }
-    //La suite à faire
 }
 
 ?>
