@@ -1,150 +1,181 @@
 <?php
 
+// Menu.php
+require_once('Config.php');
+require_once('Personnage.php');
+require_once('Monstres.php');
+// require_once('Salle.php');
+// require_once('Inventaire.php');
+require_once('Aykiu.php');
+require_once('Franklin.php');
+require_once('Sidick.php');
+
 class Menu {
-    private $bdd;
+        private $bdd;
 
-    public function __construct($bdd){
-        $this->bdd = $bdd;
-    }
+        function __construct($bdd){
+            $this->bdd = $bdd;
+        }
 
-    public function choixPersonnage(){
+        function menuCredits(){
+            $this->echoProgressif("Crédits : ");
+            $this->echoProgressif("Jeu créé par : ");
+            $this->echoProgressif(" - Aykiu");
+            $this->echoProgressif(" - Franklin");
+            $this->echoProgressif(" - Sidick", 200000); 
+        }
+        public function afficherProgressivement($texte, $delai = 20000) {
+            for ($i = 0; $i < strlen($texte); $i++) {
+                echo $texte[$i];
+                usleep($delai);
+            }
+        }
+    
+        public function echoProgressif($texte, $delai = 20000) {
+            $this->afficherProgressivement($texte, $delai);
+            echo PHP_EOL; 
+        }
+    
+        function choixPersonnage(){
         $choix = readline("Quel personnage voulez-vous choisir ?\n\n [1] Aykiu \n [2] Franklin \n [3] SIDICK\n\n");
+        $this->echoProgressif($choix);
         switch($choix){
             //Aykiu
             case 1:
-                echo " [1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n";
+                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n");
                 $choix2 = readline("Que voulez-vous faire ? >");
+                $this->echoProgressif($choix);
                 switch($choix2){
                     case 1:
-                        echo "Aykiu est un archer qui a été choisi par la déesse Lunairia pour sauver le monde.\n";
-                        echo "Il a été choisi car il est le meilleur archer du monde.\n";
-                        echo "Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.\n";
-                        echo "Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.\n";
+                        $this->echoProgressif("Aykiu est un archer qui a été choisi par la déesse Lunairia pour sauver le monde.");
+                        $this->echoProgressif("Il a été choisi car il est le meilleur archer du monde.");
+                        $this->echoProgressif("Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.");
+                        $this->echoProgressif("Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.");
                         break;
                     case 2:
-                        $personnage = new Aykiu($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo `Nom : $personnage->getNom()\n`;
-                        echo `Points de vie : $personnage->getPointsDeVie()\n`;
-                        echo `Points d'attaque : $personnage->getPointsAttaque()\n`;
-                        echo `Points de défense : $personnage->getPointsDefense()\n`;
-                        echo `Passif : $personnage->getPassif()\n`;
-                        echo `Type : $personnage->getType()\n`;
+                        $aykiu = new Aykiu("", 0, 0, 0, 0, 0, "", "", "", false);
+                        $aykiu->instanceVariables();
+                        $this->echoProgressif("Nom : $personnage->getNom()");
+                        $this->echoProgressif("Points de vie : $personnage->getPointsDeVie()");
+                        $this->echoProgressif("Points d'attaque : $personnage->getPointsAttaque()");
+                        $this->echoProgressif("Points de défense : $personnage->getPointsDefense()");
+                        $this->echoProgressif("Passif : $personnage->getPassif()");
+                        $this->echoProgressif("Type : $personnage->getType()");
+                        $this->menuDonjon();
                         break;
                     case 3:
-                        if ($personnage == true){
-                            echo "Vous avez choisi Aykiu !\n";
-                            $this->menuDonjon();
-                        }
-                        else if($personnage == false){
-                        $personnage = new Aykiu($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo "Personnage créé avec succès !\n";
-                        $this->choixPersonnage();
-                        }
-                        else{
-                            echo "Erreur";
-                        }
-                        $this->menuLancement();
+                        $aykiu = new Aykiu("", 0, 0, 0, 0, 0, "", "", "", false);
+                        $aykiu->instanceVariables();
+                        $this->echoProgressif("Personnage créé avec succès !");
+                        $this->menuDonjon();
+                        // $this->menuLancement();
                         break;
                     default:
-                        echo "Erreur";
+                        $this->echoProgressif("Erreur");
                         break;
                 }
                 break;
             //Franklin
             case 2:
-                echo " [1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n\n";
+                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n\n");
                 $choix2 = readline("Que voulez-vous faire ? >");
+                $this->echoProgressif($choix2);
                 switch($choix2){
                     case 1:
-                        echo "Franklin est un mage qui a été choisi par la déesse Megicula pour sauver le monde.\n";
-                        echo "Il a été choisi car il est le meilleur mage du monde.\n";
-                        echo "Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.\n";
-                        echo "Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.\n";
+                        $this->echoProgressif("Franklin est un mage qui a été choisi par la déesse Megicula pour sauver le monde.");
+                        $this->echoProgressif("Il a été choisi car il est le meilleur mage du monde.");
+                        $this->echoProgressif("Elu pour vaincre le roi démon qui a été ressuscité par un nécromancien.");
+                        $this->echoProgressif("Il doit donc aller dans le donjon pour vaincre ce fameux être maléfique.");
                         break;
                     case 2:
-                        $personnage = new Franklin($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo `Nom : $personnage->getNom()\n`;
-                        echo `Points de vie : $personnage->getPointsDeVie()\n`;
-                        echo `Points d'attaque : $personnage->getPointsAttaque()\n`;
-                        echo `Points de défense : $personnage->getPointsDefense()\n`;
-                        echo `Passif : $personnage->getPassif()\n`;
-                        echo `Type : $personnage->getType()\n`;
+                        $personnage = new Franklin("", 0, 0, 0, 0, 0, "", "", "", false);
+                        $personnage->instanceVariables();
+                        $this->echoProgressif("Nom : $personnage->getNom()");
+                        $this->echoProgressif("Points de vie : $personnage->getPointsDeVie()");
+                        $this->echoProgressif("Points d'attaque : $personnage->getPointsAttaque()");
+                        $this->echoProgressif("Points de défense : $personnage->getPointsDefense()");
+                        $this->echoProgressif("Passif : $personnage->getPassif()");
+                        $this->echoProgressif("Type : $personnage->getType()");
                         break;
                     case 3:
                         if ($personnage == true){
-                            echo "Vous avez choisi Franklin !\n";
+                            $this->echoProgressif("Vous avez choisi Franklin !");
                             $this->menuDonjon();
                         }
                         else if($personnage == false){
-                        $personnage = new Franklin($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo "Personnage créé avec succès !\n";
-                        $this->menuDonjon();
+                            $personnage = new Franklin("", 0, 0, 0, 0, 0, "", "", "", false);
+                            $personnage->instanceVariables();
+                            $this->echoProgressif("Personnage créé avec succès !");
+                            $this->menuDonjon();
                         }
                         else{
-                            echo "Erreur";
+                            $this->echoProgressif("Erreur");
                         }
-                        default:
-                            echo "Erreur";
-                            break;
-                    }
+                        break;
+                    default:
+                        $this->echoProgressif("Erreur");
+                        break;
+                }
                 break;
             //Sidick
             case 3:
-                echo " [1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n";
+                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n");
                 $choix2 = readline("Que voulez-vous faire ? >");
+                $this->echoProgressif($choix2);
                 switch($choix2){
                     case 1:
-                        echo "$$$$$$$$$$$$$$$$             SIDICK,LE DEMI-DIEU            $$$$$$$$$$$$";
-                        echo "Sidick, le demi-dieu, surpassait toute notion de puissance connue.\n";
-                        echo "Sa force éclipsait tous les domaines du savoir, faisant de lui le maître incontesté de chaque art et chaque compétence.\n";
-                        echo "Les dieux, constatant sa suprématie, le choisirent pour une mission cruciale.\n";
-                        echo "Le roi démon, ressuscité par un nécromancien, menaçait de plonger le monde dans les ténèbres éternelles.\n";
-                        echo "Ainsi, Sidick, élu pour sa perfection dans tous les domaines, se lança sans hésitation dans le donjon maudit,\n";
-                        echo "déterminé à éradiquer le mal qui risquait de dévorer toute existence.\n";
-                        
+                        $this->echoProgressif("$$$$$$$$$$$$$$$$              SIDICK, LE DEMI-DIEU              $$$$$$$$$$$");
+                        $this->echoProgressif("Sidick, le demi-dieu, surpassait toute notion de puissance connue.");
+                        $this->echoProgressif("Sa force éclipsait tous les domaines du savoir, faisant de lui le maître incontesté de chaque art et chaque compétence.");
+                        $this->echoProgressif("Les dieux, constatant sa suprématie, le choisirent pour une mission cruciale.");
+                        $this->echoProgressif("Le roi démon, ressuscité par un nécromancien, menaçait de plonger le monde dans les ténèbres éternelles.");
+                        $this->echoProgressif("Ainsi, Sidick, élu pour sa perfection dans tous les domaines, se lança sans hésitation dans le donjon maudit,");
+                        $this->echoProgressif("déterminé à éradiquer le mal qui risquait de dévorer toute existence.");
                         break;
                     case 2:
-                        $personnage = new Sidick($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo ` Nom : $personnage->getNom()\n`;
-                        echo `Points de vie : $personnage->getPointsDeVie()\n`;
-                        echo `Points d'attaque : $personnage->getPointsAttaque()\n`;
-                        echo `Points de défense : $personnage->getPointsDefense()\n`;
-                        echo `Passif : $personnage->getPassif()\n`;
-                        echo `Type : $personnage->getType()\n`;
+                        $personnage = new Sidick("", 0, 0, 0, 0, 0, "", "", "", false);
+                        $personnage->instanceVariables();
+                        $this->echoProgressif(" Nom : $personnage->getNom()");
+                        $this->echoProgressif("Points de vie : $personnage->getPointsDeVie()");
+                        $this->echoProgressif("Points d'attaque : $personnage->getPointsAttaque()");
+                        $this->echoProgressif("Points de défense : $personnage->getPointsDefense()");
+                        $this->echoProgressif("Passif : $personnage->getPassif()");
+                        $this->echoProgressif("Type : $personnage->getType()");
                         break;
                     case 3:
                         if ($personnage == true){
-                            echo "Vous avez choisi Sidick !";
-                            echo "Personnage créé avec succès !";
+                            $this->echoProgressif("Vous avez choisi Sidick !");
+                            $this->echoProgressif("Personnage créé avec succès !");
                             $this->menuDonjon();
                         }
                         else if($personnage == false){
-                        $personnage = new Sidick($nom, $pointsDeVie, $pointsAttaque, $pointsDefense, $experience, $niveau, $armeEquipee, $passif, $type);
-                        echo "Personnage créé avec succès !";
-                        $this->menuDonjon();
+                            $personnage = new Sidick("", 0, 0, 0, 0, 0, "", "", "", false);
+                            $personnage->instanceVariables();
+                            $this->echoProgressif("Personnage créé avec succès !");
+                            $this->menuDonjon();
                         }
                         else{
-                            echo "Erreur";
+                            $this->echoProgressif("Erreur");
                         }
-                        default:
-                            echo "Erreur";
-                            break;
-                    }
+                        break;
+                    default:
+                        $this->echoProgressif("Erreur");
+                        break;
+                }
                 break;
             default:
-                echo "Erreur";
+                $this->echoProgressif("Erreur");
                 break;
         }
     }
-
-    public function menuLancement(){
-        echo " [1] Aller dans le donjon \n";
-        echo " [2] Charger une partie \n";
-        echo " [3] Afficher les crédits\n";
-        echo " [4] Quitter le jeu\n\n";
+    function menuLancement(){
+        $this->echoProgressif(" \n[1] Aller dans le donjon \n");
+        $this->echoProgressif(" [2] Charger une partie \n");
+        $this->echoProgressif(" [3] Afficher les crédits\n");
+        $this->echoProgressif(" [4] Quitter le jeu\n\n");
 
         $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
-
+        $this->echoProgressif($choix);
         switch($choix){
             case 1:
                 $this->choixPersonnage();
@@ -156,23 +187,23 @@ class Menu {
                 $this->menuCredits();
                 break;
             case 4:
-                echo "Vous quittez le jeu.";
+                $this->echoProgressif("Vous quittez le jeu.");
                 exit();
                 break;
             default:
-                echo "Erreur";
+                $this->echoProgressif("Erreur");
                 break;
         }
     }
 
-    public function menuDonjon(){
-        echo " [1] Explorer la salle\n";
-        echo " [2] Ouvrir l'inventaire\n";
-        echo " [3] Sauvegarder la partie\n";
-        echo " [4] Quitter le jeu\n\n";
+    function menuDonjon(){
+        $this->echoProgressif(" \n[1] Explorer la salle\n");
+        $this->echoProgressif(" [2] Ouvrir l'inventaire\n");
+        $this->echoProgressif(" [3] Sauvegarder la partie\n");
+        $this->echoProgressif(" [4] Quitter le jeu\n\n");
 
         $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
-
+        $this->echoProgressif($choix);
         switch($choix){
             case 1:
                 $this->explorerSalle();
@@ -184,16 +215,17 @@ class Menu {
                 $this->sauvegarderPartie();
                 break;
             case 4:
-                echo "Vous quittez le jeu.";
+                $this->echoProgressif("Vous quittez le jeu.");
                 exit();
                 break;
             default:
-                echo "Erreur";
+                $this->echoProgressif("Erreur");
                 break;
         }
     }
 
-    public function explorerSalle(){
+
+    function explorerSalle(){
         $salle = new Salle();
         $salle->explorerDonjon($personnage);
         if($salle->getType() == "monstre"){
@@ -205,8 +237,8 @@ class Menu {
             $enigme = new Enigme();
             $enigme->lancerEnigme($personnage);
         }
-        else if($salle->getType() == "vide"){
-            echo "Il n'y a rien de spécial dans cette salle.";
+        else if($salle->getType() == "lambdas"){
+            $this->echoProgressif("Il n'y a rien de spécial dans cette salle.");
         }
         else if($salle->getType() == "boss"){
             $monstre = new Monstre();
@@ -215,34 +247,36 @@ class Menu {
         }
         else if($salle->getType() == "piège"){
             $personnage->setPointsDeVie($personnage->getPointsDeVie() - 20);
-            echo "Vous perdez 20 points de vie !";
-            echo "Vous êtes tombé dans un piège !";
+            $this->echoProgressif("Vous perdez 20 points de vie !");
+            $this->echoProgressif("Vous êtes tombé dans un piège !");
         }
         else{
-            echo "Erreur";
+            $this->echoProgressif("Erreur");
         }
     }
 
-    public function ouvrirInventaire(){
+    function ouvrirInventaire(){
         $inventaire = new Inventaire();
         $inventaire->afficherInventaire();
         $choix = readline(" \n [1] Changer d'arme \n [2] Quitter l'inventaire \n\nQue voulez-vous faire ? >");
+        $this->echoProgressif($choix);
         switch($choix){
             case 1:
                 $arme = new Arme();
                 $arme->getArme($id);
                 $inventaire->changerArme($arme);
-                echo "Vous avez changé d'arme !";
+                $this->echoProgressif("Vous avez changé d'arme !");
                 break;
             case 2:
-                echo "Vous quittez l'inventaire.";
+                $this->echoProgressif("Vous quittez l'inventaire.");
                 break;
             default:
-                echo "Erreur";
+                $this->echoProgressif("Erreur");
                 break;
         }
     }
-    public function sauvegarderPartie(){
+
+    function sauvegarderPartie(){
         $personnageDAO = new PersonnageDAO();
         $personnageDAO->sauvegarderPartie($personnage);
         $monstreDAO = new MonstresDAO();
@@ -250,6 +284,12 @@ class Menu {
         $salleDAO = new SalleDAO();
         $salleDAO->sauvegarderPartie($salle);
     }
+
+
 }
 
+
+// Instanciation de la classe Menu
+$menu = new Menu($bdd);
+$menu->menuLancement();
 ?>
