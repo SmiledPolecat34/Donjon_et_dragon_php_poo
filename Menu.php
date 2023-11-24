@@ -4,11 +4,11 @@
 require_once('Config.php');
 require_once('Personnage.php');
 require_once('Monstres.php');
-// require_once('Salle.php');
-// require_once('Inventaire.php');
 require_once('Aykiu.php');
 require_once('Franklin.php');
 require_once('Sidick.php');
+require_once("AnimationBienvenue.php");
+
 
 class Menu {
         private $bdd;
@@ -24,25 +24,25 @@ class Menu {
             $this->echoProgressif(" - Franklin");
             $this->echoProgressif(" - Sidick", 200000); 
         }
-        public function afficherProgressivement($texte, $delai = 20000) {
+        public function afficherProgressivement($texte, $delai = 5000) {
             for ($i = 0; $i < strlen($texte); $i++) {
                 echo $texte[$i];
                 usleep($delai);
             }
         }
     
-        public function echoProgressif($texte, $delai = 20000) {
+        public function echoProgressif($texte, $delai = 5000) {
             $this->afficherProgressivement($texte, $delai);
             echo PHP_EOL; 
         }
     
         function choixPersonnage(){
-        $choix = readline("Quel personnage voulez-vous choisir ?\n\n [1] Aykiu \n [2] Franklin \n [3] SIDICK\n\n");
+        $choix = readline("\n [1] Aykiu \n [2] Franklin \n [3] sidick\n Quel personnage voulez-vous choisir ? >");
         $this->echoProgressif($choix);
         switch($choix){
             //Aykiu
             case 1:
-                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n");
+                $this->echoProgressif(" \n [1] Voir l'histoire \n [2] Voir les caractéristiques \n [3] Choisir ce personnage \n");
                 $choix2 = readline("Que voulez-vous faire ? >");
                 $this->echoProgressif($choix);
                 switch($choix2){
@@ -77,7 +77,7 @@ class Menu {
                 break;
             //Franklin
             case 2:
-                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n\n");
+                $this->echoProgressif(" \n [1] Voir l'histoire \n [2] Voir les caractéristiques \n [3] Choisir ce personnage \n\n");
                 $choix2 = readline("Que voulez-vous faire ? >");
                 $this->echoProgressif($choix2);
                 switch($choix2){
@@ -119,7 +119,7 @@ class Menu {
                 break;
             //Sidick
             case 3:
-                $this->echoProgressif(" \n[1] Voir l'histoire \n [2] Voir les caractéristiques \n  [3] Choisir ce personnage \n");
+                $this->echoProgressif(" \n [1] Voir l'histoire \n [2] Voir les caractéristiques \n [3] Choisir ce personnage \n");
                 $choix2 = readline("Que voulez-vous faire ? >");
                 $this->echoProgressif($choix2);
                 switch($choix2){
@@ -169,10 +169,10 @@ class Menu {
         }
     }
     function menuLancement(){
-        $this->echoProgressif(" \n[1] Aller dans le donjon \n");
-        $this->echoProgressif(" [2] Charger une partie \n");
-        $this->echoProgressif(" [3] Afficher les crédits\n");
-        $this->echoProgressif(" [4] Quitter le jeu\n\n");
+        $this->echoProgressif(" [1] Aller dans le donjon ");
+        $this->echoProgressif(" [2] Charger une partie ");
+        $this->echoProgressif(" [3] Afficher les crédits");
+        $this->echoProgressif(" [4] Quitter le jeu\n");
 
         $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
         $this->echoProgressif($choix);
@@ -197,10 +197,10 @@ class Menu {
     }
 
     function menuDonjon(){
-        $this->echoProgressif(" \n[1] Explorer la salle\n");
-        $this->echoProgressif(" [2] Ouvrir l'inventaire\n");
-        $this->echoProgressif(" [3] Sauvegarder la partie\n");
-        $this->echoProgressif(" [4] Quitter le jeu\n\n");
+        $this->echoProgressif(" \n[1] Explorer la salle");
+        $this->echoProgressif(" [2] Ouvrir l'inventaire");
+        $this->echoProgressif(" [3] Sauvegarder la partie");
+        $this->echoProgressif(" [4] Quitter le jeu\n");
 
         $choix = readline("Que voulez-vous faire (1, 2, 3 ou 4) ? >");
         $this->echoProgressif($choix);
@@ -226,33 +226,17 @@ class Menu {
 
 
     function explorerSalle(){
-        $salle = new Salle();
-        $salle->explorerDonjon($personnage);
-        if($salle->getType() == "monstre"){
-            $monstre = new Monstre();
-            $monstre->getMonstre($id);
-            $this->combat($personnage, $monstre);
-        }
-        else if($salle->getType() == "tresor"){
-            $enigme = new Enigme();
-            $enigme->lancerEnigme($personnage);
-        }
-        else if($salle->getType() == "lambdas"){
-            $this->echoProgressif("Il n'y a rien de spécial dans cette salle.");
-        }
-        else if($salle->getType() == "boss"){
-            $monstre = new Monstre();
-            $monstre->getMonstre($id);
-            $this->combat($personnage, $monstre);
-        }
-        else if($salle->getType() == "piège"){
-            $personnage->setPointsDeVie($personnage->getPointsDeVie() - 20);
-            $this->echoProgressif("Vous perdez 20 points de vie !");
-            $this->echoProgressif("Vous êtes tombé dans un piège !");
-        }
-        else{
-            $this->echoProgressif("Erreur");
-        }
+        $salleDAO = new SalleDAO($this->bdd);
+        $salles = $salleDAO->getSalles();
+
+        // Choisir une salle aléatoire
+        $salleIndex = array_rand($salles);
+        $salle = $salles[$salleIndex];
+
+        // Explorer la salle choisie
+        echo "Vous explorez la salle : " . $salle->getNom() . "\n";
+        echo "Description : " . $salle->getDescription() . "\n";
+    
     }
 
     function ouvrirInventaire(){
@@ -263,7 +247,6 @@ class Menu {
         switch($choix){
             case 1:
                 $arme = new Arme();
-                $arme->getArme($id);
                 $inventaire->changerArme($arme);
                 $this->echoProgressif("Vous avez changé d'arme !");
                 break;
@@ -287,6 +270,65 @@ class Menu {
 
 
 }
+
+class Combat {
+
+    public function debuterCombat() {
+        echo "Un combat débute entre " . $this->personnage->getNom() . " et " . $this->monstre->getNom() . " !\n";
+
+        while ($this->personnage->getEstVivant() && $this->monstre->getEstVivant()) {
+            $this->tourDeCombat();
+        }
+
+        $this->afficherResultatCombat();
+    }
+
+    protected function tourDeCombat() {
+        echo "Tour de combat :\n";
+        echo $this->personnage->getNom() . " (Vie: " . $this->personnage->getPointsDeVie() . ") vs " . $this->monstre->getNom() . " (Vie: " . $this->monstre->getPointsDeVie() . ")\n";
+
+        // Le personnage attaque le monstre
+        $this->personnage->attaquer($this->monstre);
+        echo $this->personnage->getNom() . " attaque " . $this->monstre->getNom() . " !\n";
+
+        // Vérifier si le monstre est toujours vivant après l'attaque
+        if (!$this->monstre->getEstVivant()) {
+            echo $this->monstre->getNom() . " a été vaincu !\n";
+            return;
+        }
+
+        // Le monstre attaque le personnage
+        $this->monstre->attaquer($this->personnage);
+        echo $this->monstre->getNom() . " attaque " . $this->personnage->getNom() . " !\n";
+
+        // Vérifier si le personnage est toujours vivant après l'attaque
+        if (!$this->personnage->getEstVivant()) {
+            echo $this->personnage->getNom() . " a été vaincu !\n";
+        }
+    }
+
+    protected function afficherResultatCombat() {
+        if (!$this->personnage->getEstVivant()) {
+            echo "Vous avez perdu le combat. Game Over.\n";
+        } elseif (!$this->monstre->getEstVivant()) {
+            echo "Félicitations ! Vous avez vaincu " . $this->monstre->getNom() . ".\n";
+            
+        }
+    }
+}
+
+// Exemple d'utilisation
+$armeDAO = new ArmeDAO($bdd);
+
+$personnageDAO = new PersonnageDAO($bdd);
+$personnage = $personnageDAO->getPersonnage(1); 
+$personnage->setArmeEquipee($epeeCommune);
+
+$monstreDAO = new MonstresDAO($bdd);
+$monstre = $monstreDAO->getMonstres(1); 
+
+$combat = new Combat($personnage, $monstre);
+$combat->debuterCombat();
 
 
 // Instanciation de la classe Menu
